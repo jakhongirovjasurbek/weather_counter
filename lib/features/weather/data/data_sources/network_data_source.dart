@@ -1,3 +1,4 @@
+import 'package:test_project/assets/constants/app_constants.dart';
 import 'package:test_project/core/data/dio.dart';
 import 'package:test_project/core/data/singletons.dart';
 import 'package:test_project/core/error/exceptions.dart';
@@ -15,15 +16,15 @@ class NetworkDataSourceImpl extends NetworkDataSource {
   Future<WeatherModel> getWeather({required String locationName}) =>
       _getWeather(locationName: locationName);
 
-
-
   /// Implementations of methods
   Future<WeatherModel> _getWeather({required String locationName}) async {
     final dio = singletons<DioSettings>().dio;
-
+    print('In api request');
+    print(locationName);
     try {
       final response = await dio.get('/current.json', queryParameters: {
         'q': locationName,
+        'key': WEATHER_API_KEY,
       });
       if (response.statusCode! == 200) {
         return WeatherModel.fromJson(response.data);

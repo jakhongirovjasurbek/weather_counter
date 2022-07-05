@@ -29,11 +29,9 @@ class WInterceptor implements Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     print('Request is being handled');
 
-    /// Impelemnt your options over here
-    // options.headers = {'Authorization': 'Bearer Token', 'language': 'uz'};
-    options.queryParameters = {
-      'key': WEATHER_API_KEY,
-    };
+ 
+    print(options.uri);
+    print(options.headers);
     handler.next(options);
   }
 
@@ -41,14 +39,8 @@ class WInterceptor implements Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     /// Implement your own exception handling
     /// Or throw your own custom exception
-    if (!(response.statusCode! >= 200 && response.statusCode! < 300)) {
-      /// Implement RegEx to customize your error message
-      final message = '${(response.data as Map<String, dynamic>).values.first}'
-          .replaceAll(RegExp(r''), '');
-      throw Exception(message);
-    } else {
-      handler.next(response);
-    }
+
+    handler.next(response);
   }
 
   bool _shouldRetryRequest(DioError error) {

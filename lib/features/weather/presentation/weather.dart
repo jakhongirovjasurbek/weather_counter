@@ -17,9 +17,10 @@ class WeatherWidget extends StatelessWidget {
         child: BlocBuilder<WeatherBloc, WeatherState>(
           builder: (context, state) {
             if (state.status == FormzStatus.submissionInProgress) {
-              return const CupertinoActivityIndicator();
+              return const Center(child: CupertinoActivityIndicator());
             }
             return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               alignment: Alignment.center,
               child: Text(
                 state.weatherData.current == null
@@ -29,6 +30,7 @@ class WeatherWidget extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
+                textAlign: TextAlign.center,
               ),
             );
           },
